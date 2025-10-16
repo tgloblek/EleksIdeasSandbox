@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Eleks Ideas PowerApps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+          sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+
+      .iframe-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        letter-spacing: 0.08rem;
+        text-transform: uppercase;
+        opacity: 0.9;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading" id="loading-indicator">Loading PowerApps…</div>
+    <div class="iframe-wrapper">
+      <iframe
+        id="powerapps-frame"
+        src="https://apps.powerapps.com/play/e/0344bb8e-8b04-e3bc-9784-c0e91551c35e/a/f0a77212-4d61-4a25-aef1-709316174aad?tenantId=1a54e107-6999-4f70-acdb-194c649c72f2&hint=675b2e2b-1703-45fe-8244-aa32db2d2131&sourcetime=1760599977045&source=portal"
+        title="Eleks Ideas PowerApps"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <script>
+      // Hide the loading message as soon as the PowerApps iframe signals readiness.
+      window.addEventListener("message", (event) => {
+        if (event.source !== document.getElementById("powerapps-frame").contentWindow) {
+          return;
+        }
+
+        if (event.data && typeof event.data === "string" && event.data.includes("PowerApps")) {
+          document.getElementById("loading-indicator").classList.add("hidden");
+        }
+      });
+
+      // Fallback: hide the loading message after a short delay even if no message is received.
+      window.setTimeout(() => {
+        document.getElementById("loading-indicator").classList.add("hidden");
+      }, 4000);
+    </script>
+    <noscript>
+      PowerApps embeds require JavaScript. Enable JavaScript to load the application.
+    </noscript>
+  </body>
+</html>
